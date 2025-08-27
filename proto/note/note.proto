@@ -1,0 +1,58 @@
+syntax = "proto3";
+package note;
+option go_package = "github.com/kitoyanok66/inote-protos/proto/note";
+
+import "google/protobuf/timestamp.proto";
+
+service NoteService {
+    rpc CreateNote (CreateNoteRequest) returns (NoteResponse);
+    rpc GetNote (UpdateNoteRequest) returns (NoteResponse);
+    rpc UpdateNote (UpdateNoteRequest) returns (NoteResponse);
+    rpc DeleteNote (DeleteNoteRequest) returns (DeleteNoteResponse);
+    rpc ListNotes (ListNotesRequest) returns (ListNotesResponse);
+}
+
+message Note {
+    string id = 1;
+    string title = 2;
+    string content = 3;
+    repeated string tags = 4;
+    string owner_id = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
+}
+
+message CreateNoteRequest {
+    string title = 1;
+    string content = 2;
+    repeated string tags = 3;
+    string owner_id = 4;
+}
+
+message UpdateNoteRequest {
+    string id = 1;
+    string title = 2;
+    string content = 3;
+    repeated string tags = 4;
+}
+
+message GetNoteRequest {
+    string id = 1;
+}
+
+message DeleteNoteRequest {
+    string id = 1;
+}
+
+message DeleteNoteResponse {
+    bool success = 1;
+}
+
+message ListNotesRequest {
+    string owner_id = 1;
+    repeated string tags = 2;
+}
+
+message ListNotesResponse {
+    repeated Note notes = 1;
+}

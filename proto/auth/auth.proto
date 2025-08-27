@@ -1,0 +1,47 @@
+syntax = "proto3";
+package auth;
+option go_package = "github.com/kitoyanok66/inote-protos/proto/auth";
+
+import "google/protobuf/timestamp.proto";
+
+service AuthService {
+    rpc Register (RegisterRequest) returns (RegisterResponse);
+    rpc Login (LoginRequest) returns (LoginResponse);
+    rpc GetUser (GetUserRequest) returns (UserResponse);
+}
+
+message User {
+    string id = 1;
+    string email = 2;
+    string username = 3;
+    google.protobuf.Timestamp created_at = 4;
+}
+
+message RegisterRequest {
+    string email = 1;
+    string username = 2;
+    string password = 3;
+}
+
+message RegisterResponse {
+    User user = 1;
+    string token = 2;
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    User user = 1;
+    string token = 2;
+}
+
+message GetUserRequest {
+    string id = 1;
+}
+
+message UserResponse {
+    User user = 1;
+}
