@@ -39,6 +39,10 @@ message CreateTaskRequest {
     string owner_id = 6;
 }
 
+message GetTaskRequest {
+    string id = 1;
+}
+
 message UpdateTaskRequest {
     string id = 1;
     string title = 2;
@@ -48,8 +52,8 @@ message UpdateTaskRequest {
     string assignee_id = 6;
 }
 
-message GetTaskRequest {
-    string id = 1;
+message TaskResponse {
+    Task task = 1;
 }
 
 message DeleteTaskRequest {

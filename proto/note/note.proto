@@ -29,6 +29,10 @@ message CreateNoteRequest {
     string owner_id = 4;
 }
 
+message GetNoteRequest {
+    string id = 1;
+}
+
 message UpdateNoteRequest {
     string id = 1;
     string title = 2;
@@ -36,8 +40,8 @@ message UpdateNoteRequest {
     repeated string tags = 4;
 }
 
-message GetNoteRequest {
-    string id = 1;
+message NoteResponse {
+    Note note = 1;
 }
 
 message DeleteNoteRequest {
