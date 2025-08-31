@@ -32,7 +32,7 @@ const (
 type TaskServiceClient interface {
 	CreateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*TaskResponse, error)
 	GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*TaskResponse, error)
-	UpdateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*TaskResponse, error)
+	UpdateTask(ctx context.Context, in *UpdateTaskRequest, opts ...grpc.CallOption) (*TaskResponse, error)
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*DeleteTaskResponse, error)
 	ListTasks(ctx context.Context, in *ListTasksRequest, opts ...grpc.CallOption) (*ListTasksResponse, error)
 }
@@ -65,7 +65,7 @@ func (c *taskServiceClient) GetTask(ctx context.Context, in *GetTaskRequest, opt
 	return out, nil
 }
 
-func (c *taskServiceClient) UpdateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*TaskResponse, error) {
+func (c *taskServiceClient) UpdateTask(ctx context.Context, in *UpdateTaskRequest, opts ...grpc.CallOption) (*TaskResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TaskResponse)
 	err := c.cc.Invoke(ctx, TaskService_UpdateTask_FullMethodName, in, out, cOpts...)
@@ -101,7 +101,7 @@ func (c *taskServiceClient) ListTasks(ctx context.Context, in *ListTasksRequest,
 type TaskServiceServer interface {
 	CreateTask(context.Context, *CreateTaskRequest) (*TaskResponse, error)
 	GetTask(context.Context, *GetTaskRequest) (*TaskResponse, error)
-	UpdateTask(context.Context, *CreateTaskRequest) (*TaskResponse, error)
+	UpdateTask(context.Context, *UpdateTaskRequest) (*TaskResponse, error)
 	DeleteTask(context.Context, *DeleteTaskRequest) (*DeleteTaskResponse, error)
 	ListTasks(context.Context, *ListTasksRequest) (*ListTasksResponse, error)
 	mustEmbedUnimplementedTaskServiceServer()
@@ -120,7 +120,7 @@ func (UnimplementedTaskServiceServer) CreateTask(context.Context, *CreateTaskReq
 func (UnimplementedTaskServiceServer) GetTask(context.Context, *GetTaskRequest) (*TaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTask not implemented")
 }
-func (UnimplementedTaskServiceServer) UpdateTask(context.Context, *CreateTaskRequest) (*TaskResponse, error) {
+func (UnimplementedTaskServiceServer) UpdateTask(context.Context, *UpdateTaskRequest) (*TaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTask not implemented")
 }
 func (UnimplementedTaskServiceServer) DeleteTask(context.Context, *DeleteTaskRequest) (*DeleteTaskResponse, error) {
@@ -187,7 +187,7 @@ func _TaskService_GetTask_Handler(srv interface{}, ctx context.Context, dec func
 }
 
 func _TaskService_UpdateTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateTaskRequest)
+	in := new(UpdateTaskRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -199,7 +199,7 @@ func _TaskService_UpdateTask_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: TaskService_UpdateTask_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskServiceServer).UpdateTask(ctx, req.(*CreateTaskRequest))
+		return srv.(TaskServiceServer).UpdateTask(ctx, req.(*UpdateTaskRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

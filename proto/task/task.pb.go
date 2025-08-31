@@ -678,7 +678,7 @@ const file_proto_task_task_proto_rawDesc = "" +
 	"CreateTask\x12\x17.task.CreateTaskRequest\x1a\x12.task.TaskResponse\x123\n" +
 	"\aGetTask\x12\x14.task.GetTaskRequest\x1a\x12.task.TaskResponse\x129\n" +
 	"\n" +
-	"UpdateTask\x12\x17.task.CreateTaskRequest\x1a\x12.task.TaskResponse\x12?\n" +
+	"UpdateTask\x12\x17.task.UpdateTaskRequest\x1a\x12.task.TaskResponse\x12?\n" +
 	"\n" +
 	"DeleteTask\x12\x17.task.DeleteTaskRequest\x1a\x18.task.DeleteTaskResponse\x12<\n" +
 	"\tListTasks\x12\x16.task.ListTasksRequest\x1a\x17.task.ListTasksResponseB0Z.github.com/kitoyanok66/inote-protos/proto/taskb\x06proto3"
@@ -724,7 +724,7 @@ var file_proto_task_task_proto_depIdxs = []int32{
 	1,  // 10: task.ListTasksResponse.tasks:type_name -> task.Task
 	2,  // 11: task.TaskService.CreateTask:input_type -> task.CreateTaskRequest
 	3,  // 12: task.TaskService.GetTask:input_type -> task.GetTaskRequest
-	2,  // 13: task.TaskService.UpdateTask:input_type -> task.CreateTaskRequest
+	4,  // 13: task.TaskService.UpdateTask:input_type -> task.UpdateTaskRequest
 	6,  // 14: task.TaskService.DeleteTask:input_type -> task.DeleteTaskRequest
 	8,  // 15: task.TaskService.ListTasks:input_type -> task.ListTasksRequest
 	5,  // 16: task.TaskService.CreateTask:output_type -> task.TaskResponse
