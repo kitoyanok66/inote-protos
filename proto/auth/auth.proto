@@ -4,28 +4,24 @@ option go_package = "github.com/kitoyanok66/inote-protos/proto/auth";
 
 import "google/protobuf/timestamp.proto";
 
-service AuthService {
-    rpc Register (RegisterRequest) returns (RegisterResponse);
-    rpc Login (LoginRequest) returns (LoginResponse);
-    rpc GetUser (GetUserRequest) returns (UserResponse);
-}
-
 message User {
     string id = 1;
     string email = 2;
-    string username = 3;
-    google.protobuf.Timestamp created_at = 4;
+    string password_hash = 3;
+    string name = 4;
+    google.protobuf.Timestamp created_at = 5;
 }
 
 message RegisterRequest {
     string email = 1;
-    string username = 2;
-    string password = 3;
+    string password = 2;
+    string name = 3;
 }
 
 message RegisterResponse {
-    User user = 1;
-    string token = 2;
+    bool success = 1;
+    string message = 2;
+    User user = 3;
 }
 
 message LoginRequest {
@@ -34,14 +30,24 @@ message LoginRequest {
 }
 
 message LoginResponse {
-    User user = 1;
-    string token = 2;
+    bool success = 1;
+    string message = 2;
+    string access_token = 3;
+    string refresh_token = 4;
 }
 
-message GetUserRequest {
-    string id = 1;
+message ValidateTokenRequest {
+    string token = 1;
 }
 
-message UserResponse {
-    User user = 1;
+message ValidateTokenResponse {
+    bool success = 1;
+    string message = 2;
+    User user = 3;
+}
+
+service AuthService {
+    rpc Register(RegisterRequest) returns (RegisterResponse);
+    rpc Login(LoginRequest) returns (LoginResponse);
+    rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
 }

@@ -19,9 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_Register_FullMethodName = "/auth.AuthService/Register"
-	AuthService_Login_FullMethodName    = "/auth.AuthService/Login"
-	AuthService_GetUser_FullMethodName  = "/auth.AuthService/GetUser"
+	AuthService_Register_FullMethodName      = "/auth.AuthService/Register"
+	AuthService_Login_FullMethodName         = "/auth.AuthService/Login"
+	AuthService_ValidateToken_FullMethodName = "/auth.AuthService/ValidateToken"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -30,7 +30,7 @@ const (
 type AuthServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
+	ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*ValidateTokenResponse, error)
 }
 
 type authServiceClient struct {
@@ -61,10 +61,10 @@ func (c *authServiceClient) Login(ctx context.Context, in *LoginRequest, opts ..
 	return out, nil
 }
 
-func (c *authServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*UserResponse, error) {
+func (c *authServiceClient) ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*ValidateTokenResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UserResponse)
-	err := c.cc.Invoke(ctx, AuthService_GetUser_FullMethodName, in, out, cOpts...)
+	out := new(ValidateTokenResponse)
+	err := c.cc.Invoke(ctx, AuthService_ValidateToken_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (c *authServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opt
 type AuthServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	GetUser(context.Context, *GetUserRequest) (*UserResponse, error)
+	ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -94,8 +94,8 @@ func (UnimplementedAuthServiceServer) Register(context.Context, *RegisterRequest
 func (UnimplementedAuthServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedAuthServiceServer) GetUser(context.Context, *GetUserRequest) (*UserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+func (UnimplementedAuthServiceServer) ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateToken not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -154,20 +154,20 @@ func _AuthService_Login_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserRequest)
+func _AuthService_ValidateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateTokenRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).GetUser(ctx, in)
+		return srv.(AuthServiceServer).ValidateToken(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthService_GetUser_FullMethodName,
+		FullMethod: AuthService_ValidateToken_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).GetUser(ctx, req.(*GetUserRequest))
+		return srv.(AuthServiceServer).ValidateToken(ctx, req.(*ValidateTokenRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -188,8 +188,8 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AuthService_Login_Handler,
 		},
 		{
-			MethodName: "GetUser",
-			Handler:    _AuthService_GetUser_Handler,
+			MethodName: "ValidateToken",
+			Handler:    _AuthService_ValidateToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
